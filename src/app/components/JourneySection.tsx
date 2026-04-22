@@ -37,10 +37,12 @@ function TimelineCard({ label, side }: TimelineCardProps) {
             background: "var(--green-light)",
             borderRadius: "var(--radius)",
             padding: "1.25rem 1.5rem",
-            maxWidth: "280px",
+            maxWidth: "380px",
             width: "100%",
-            minHeight: "80px",
+            minHeight: "100px",
             boxShadow: "var(--shadow-card)",
+            fontWeight: 600,
+            fontSize: "text-lg",
           }}>
             <p style={{ fontSize: "0.875rem", color: "var(--gray-700)", lineHeight: 1.5 }}>{label}</p>
           </div>
@@ -74,10 +76,12 @@ function TimelineCard({ label, side }: TimelineCardProps) {
             background: "var(--green-light)",
             borderRadius: "var(--radius)",
             padding: "1.25rem 1.5rem",
-            maxWidth: "280px",
+            maxWidth: "380px",
             width: "100%",
-            minHeight: "80px",
+            minHeight: "100px",
             boxShadow: "var(--shadow-card)",
+            fontWeight: 600,
+            fontSize: "text-lg",
           }}>
             <p style={{ fontSize: "0.875rem", color: "var(--gray-700)", lineHeight: 1.5 }}>{label}</p>
           </div>
@@ -94,11 +98,8 @@ export default function JourneySection() {
       maxWidth: "860px",
       margin: "0 auto",
     }}>
-      <h2 style={{
+      <h2  className="!text-6xl white font-extrabold" style={{
         fontFamily: "var(--font-display)",
-        fontWeight: 700,
-        fontSize: "clamp(1.6rem, 3vw, 2rem)",
-        color: "var(--gray-900)",
         marginBottom: "3rem",
       }}>Our Journey So Far</h2>
 
@@ -112,7 +113,7 @@ export default function JourneySection() {
           top: "1.6rem",
           bottom: 0,
           width: 2,
-          background: "var(--green-mid)",
+          background: "green",
           zIndex: 0,
         }} />
 

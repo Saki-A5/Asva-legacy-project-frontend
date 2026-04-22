@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
@@ -29,19 +30,13 @@ export default function Navbar() {
     }}>
       {/* Logo */}
       <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}>
-        <div style={{
-          width: 36,
-          height: 36,
-          borderRadius: "50%",
-          background: "var(--black)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "white",
-          fontFamily: "var(--font-display)",
-          fontWeight: 700,
-          fontSize: "0.9rem",
-        }}>S</div>
+        <Image
+          src="/asva logo.png"
+          alt="ASVA Logo"
+          width={36}
+          height={36}
+          priority
+        />
       </Link>
 
       {/* Desktop Links */}

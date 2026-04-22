@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Rocket, Eye } from "lucide-react";
 
 interface CardProps {
@@ -63,14 +64,12 @@ export default function WhoWeAreSection() {
           background: "var(--gray-200)",
           position: "relative",
         }}>
-          {/* Replace with Next.js Image component + actual src */}
-          <div style={{
-            width: "100%", height: "100%",
-            background: "linear-gradient(135deg, #1a3a26 0%, #22c55e22 100%)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}>
-            <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem" }}>Group Photo</span>
-          </div>
+          <Image
+            src="/rectangle 5.png"
+            alt="Group Photo"
+            fill
+            style={{ objectFit: "cover" }}
+          />
         </div>
 
         {/* Content */}
