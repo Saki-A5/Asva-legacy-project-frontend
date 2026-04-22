@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function HeroSection() {
   return (
     <section
       id="overview"
-      className="flex items-end mx-4"
-      style={{ position: "relative", height: "520px", overflow: "hidden", borderRadius: "24px" }}
+      className="relative mx-4 flex items-end h-[520px] overflow-hidden rounded-2xl"
     >
       <Image
         src="/hero-image.png"
@@ -14,41 +14,45 @@ export default function HeroSection() {
         fill
         priority
         sizes="100vw"
-        style={{ objectFit: "cover", objectPosition: "center top" }}
+        className="object-cover object-center"
       />
 
-      {/* Gradient — heavy at bottom for text readability */}
-      <div style={{
-        position: "absolute", inset: 0, zIndex: 10,
-        background: "linear-gradient(to bottom, rgba(253, 142, 142, 0.05) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.78) 100%)"
-      }} />
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-black/20 to-black/80" />
 
-      {/* Text content */}
-      <div style={{ position: "relative", zIndex: 20, width: "95%", padding: "280px 0 40px 40px" }}>
-        <h1 style={{ fontSize: "clamp(22px, 4vw, 36px)", fontWeight: 700, color: "white", lineHeight: 1.2, marginBottom: "12px", maxWidth: "900px" }}>
+      {/* Animated content */}
+      <motion.div
+        className="relative z-20 w-[95%] pl-10 pb-10 pt-[280px]"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
+        <h1 className="text-white font-bold leading-tight mb-3 max-w-[900px] text-[clamp(22px,4vw,36px)]">
           ASVA — Building Leaders. Driving Impact. Strengthening Our Academic Community.
         </h1>
-        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.9)", lineHeight: 1.65, marginBottom: "20px", maxWidth: "500px", textAlign: "justify" }}>
+
+        <p className="text-white/90 text-sm leading-relaxed mb-5 max-w-[500px] text-justify">
           The official association representing students, advancing academic excellence,
           leadership, and meaningful campus engagement.
         </p>
-        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-          <Link href="#join" style={{
-            padding: "8px 20px", borderRadius: "999px", fontSize: "13px", fontWeight: 500,
-            color: "white", textDecoration: "none",
-            border: "1.5px solid rgba(255,255,255,0.6)",
-            background: "rgba(255,255,255,0.1)", backdropFilter: "blur(4px)"
-          }}>
+
+        <div className="flex flex-wrap gap-2.5">
+          <Link
+            href="#join"
+            className="px-5 py-2 rounded-full text-sm font-medium text-white border border-white/60 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition"
+          >
             Join ASVA
           </Link>
-          <Link href="#events" style={{
-            padding: "8px 20px", borderRadius: "999px", fontSize: "13px", fontWeight: 500,
-            color: "white", textDecoration: "none", background: "#22c55e"
-          }}>
+
+          <Link
+            href="#events"
+            className="px-5 py-2 rounded-full text-sm font-medium text-white bg-green-500 hover:bg-green-600 transition"
+          >
             Upcoming Events
           </Link>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

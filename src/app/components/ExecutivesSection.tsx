@@ -11,7 +11,6 @@ const executives: Executive[] = [
     role: "President",
     tagline: "To bring new innovations while managing such a productive team",
   },
-  // Add more executives here
 ];
 
 interface ExecCardProps {
@@ -20,69 +19,34 @@ interface ExecCardProps {
 
 function ExecCard({ exec }: ExecCardProps) {
   return (
-    <div style={{
-      position: "relative",
-      borderRadius: "var(--radius)",
-      overflow: "hidden",
-      width: "200px",
-      aspectRatio: "3/4",
-      background: "#1a2e20",
-      flexShrink: 0,
-      boxShadow: "0 4px 24px rgba(0,0,0,0.15)",
-    }}>
+    <div className="relative w-[200px] aspect-[3/4] overflow-hidden rounded-xl bg-[#1a2e20] shadow-lg flex-shrink-0">
+      
       {/* Photo background */}
       {exec.imageSrc ? (
         <img
           src={exec.imageSrc}
           alt={exec.name}
-          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
+          className="w-full h-full object-cover object-top"
         />
       ) : (
-        <div style={{
-          width: "100%", height: "100%",
-          background: "linear-gradient(160deg, #2d4a36 0%, #1a2e20 100%)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>
-          <div style={{
-            width: 60, height: 60, borderRadius: "50%",
-            background: "rgba(255,255,255,0.1)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            color: "rgba(255,255,255,0.3)",
-            fontSize: "1.5rem",
-            fontFamily: "var(--font-display)",
-          }}>
+        <div className="w-full h-full bg-gradient-to-br from-[#2d4a36] to-[#1a2e20] flex items-center justify-center">
+          <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center text-white/30 text-xl font-semibold">
             {exec.name[0]}
           </div>
         </div>
       )}
 
       {/* Overlay text */}
-      <div style={{
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        padding: "1rem",
-        background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)",
-      }}>
-        <p style={{
-          color: "white",
-          fontWeight: 600,
-          fontSize: "0.85rem",
-          lineHeight: 1.3,
-          marginBottom: "0.15rem",
-        }}>{exec.name}</p>
-        <p style={{
-          color: "var(--green)",
-          fontSize: "0.75rem",
-          fontWeight: 500,
-          marginBottom: "0.35rem",
-        }}>{exec.role}</p>
-        <p style={{
-          color: "rgba(255,255,255,0.65)",
-          fontSize: "0.7rem",
-          lineHeight: 1.4,
-        }}>{exec.tagline}</p>
+      <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/85 to-transparent">
+        <p className="text-white font-semibold text-sm leading-tight mb-1">
+          {exec.name}
+        </p>
+        <p className="text-green-400 text-xs font-medium mb-1">
+          {exec.role}
+        </p>
+        <p className="text-white/70 text-xs leading-relaxed">
+          {exec.tagline}
+        </p>
       </div>
     </div>
   );
@@ -90,37 +54,19 @@ function ExecCard({ exec }: ExecCardProps) {
 
 export default function ExecutivesSection() {
   return (
-    <section id="execs" style={{
-      padding: "4rem 1.5rem",
-      maxWidth: "1100px",
-      margin: "0 auto",
-    }}>
+    <section
+      id="execs"
+      className="px-6 py-16 max-w-6xl mx-auto"
+    >
       {/* Section header badge */}
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        marginBottom: "3rem",
-      }}>
-        <div style={{
-          background: "var(--green)",
-          color: "white",
-          borderRadius: "var(--radius-sm)",
-          padding: "0.6rem 2.5rem",
-          fontWeight: 600,
-          fontSize: "1rem",
-          letterSpacing: "0.01em",
-        }}>
+      <div className="flex justify-center mb-12">
+        <div className="bg-green-600 text-white rounded-md px-10 py-2 font-semibold text-base">
           Meet the Current Executives
         </div>
       </div>
 
       {/* Cards row */}
-      <div style={{
-        display: "flex",
-        gap: "1.5rem",
-        flexWrap: "wrap",
-        justifyContent: "center",
-      }}>
+      <div className="flex flex-wrap justify-center gap-6">
         {executives.map((exec) => (
           <ExecCard key={exec.name} exec={exec} />
         ))}

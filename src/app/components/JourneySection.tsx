@@ -1,3 +1,8 @@
+"use client";
+
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+
 interface TimelineEvent {
   id: number;
   label: string;
@@ -11,112 +16,98 @@ const events: TimelineEvent[] = [
   { id: 4, label: "Expanded partnerships and student opportunities", side: "left" },
 ];
 
-interface TimelineCardProps {
+function TimelineCard({
+  label,
+  side,
+}: {
   label: string;
   side: "left" | "right";
-}
+}) {
+  const isLeft = side === "left";
 
-function TimelineCard({ label, side }: TimelineCardProps) {
   return (
-    <div style={{
-      display: "grid",
-      gridTemplateColumns: "1fr 32px 1fr",
-      alignItems: "start",
-      gap: "0",
-      marginBottom: "0",
-    }}>
-      {/* Left slot */}
-      <div style={{
-        display: "flex",
-        justifyContent: "flex-end",
-        paddingRight: "1.5rem",
-        paddingBottom: "2.5rem",
-      }}>
-        {side === "left" && (
-          <div style={{
-            background: "var(--green-light)",
-            borderRadius: "var(--radius)",
-            padding: "1.25rem 1.5rem",
-            maxWidth: "380px",
-            width: "100%",
-            minHeight: "100px",
-            boxShadow: "var(--shadow-card)",
-            fontWeight: 600,
-            fontSize: "text-lg",
-          }}>
-            <p style={{ fontSize: "0.875rem", color: "var(--gray-700)", lineHeight: 1.5 }}>{label}</p>
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ duration: 0.6 }}
+      className="grid grid-cols-[1fr_32px_1fr] items-start"
+    >
+      {/* LEFT */}
+      <div className="flex justify-end pr-6 pb-10">
+        {isLeft && (
+          <div className="bg-green-100 rounded-xl p-5 max-w-[380px] w-full shadow-md">
+            <p className="text-sm text-gray-700 font-semibold leading-relaxed">
+              {label}
+            </p>
           </div>
         )}
       </div>
 
-      {/* Center dot + line */}
-      <div style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}>
-        <div style={{
-          width: 14, height: 14,
-          borderRadius: "50%",
-          background: "var(--green)",
-          flexShrink: 0,
-          marginTop: "1.4rem",
-          boxShadow: "0 0 0 3px var(--green-mid)",
-          zIndex: 1,
-        }} />
+      {/* CENTER DOT (static fallback) */}
+      <div className="flex flex-col items-center relative">
+        <div className="w-3.5 h-3.5 rounded-full bg-green-500 shadow-[0_0_0_4px_rgba(34,197,94,0.2)] mt-6 z-10" />
       </div>
 
-      {/* Right slot */}
-      <div style={{
-        paddingLeft: "1.5rem",
-        paddingBottom: "2.5rem",
-      }}>
-        {side === "right" && (
-          <div style={{
-            background: "var(--green-light)",
-            borderRadius: "var(--radius)",
-            padding: "1.25rem 1.5rem",
-            maxWidth: "380px",
-            width: "100%",
-            minHeight: "100px",
-            boxShadow: "var(--shadow-card)",
-            fontWeight: 600,
-            fontSize: "text-lg",
-          }}>
-            <p style={{ fontSize: "0.875rem", color: "var(--gray-700)", lineHeight: 1.5 }}>{label}</p>
+      {/* RIGHT */}
+      <div className="pl-6 pb-10">
+        {!isLeft && (
+          <div className="bg-green-100 rounded-xl p-5 max-w-[380px] w-full shadow-md">
+            <p className="text-sm text-gray-700 font-semibold leading-relaxed">
+              {label}
+            </p>
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 export default function JourneySection() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // Scroll progress of the whole timeline
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 0.2", "end 0.9"],
+  });
+
+  // Line fills as you scroll
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
   return (
-    <section id="history" style={{
-      padding: "4rem 1.5rem",
-      maxWidth: "860px",
-      margin: "0 auto",
-    }}>
-      <h2  className="!text-6xl white font-extrabold" style={{
-        fontFamily: "var(--font-display)",
-        marginBottom: "3rem",
-      }}>Our Journey So Far</h2>
+    <section className="max-w-3xl mx-auto px-6 py-16">
+      {/* Title */}
+      <motion.h2
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-4xl md:text-5xl font-extrabold text-center mb-12"
+      >
+        Our Journey So Far
+      </motion.h2>
 
-      {/* Timeline container */}
-      <div style={{ position: "relative" }}>
-        {/* Vertical line */}
-        <div style={{
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%)",
-          top: "1.6rem",
-          bottom: 0,
-          width: 2,
-          background: "green",
-          zIndex: 0,
-        }} />
+      {/* TIMELINE WRAPPER */}
+      <div ref={containerRef} className="relative">
 
+        {/* BACKGROUND LINE */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-6 bottom-0 w-[2px] bg-gray-200" />
+
+        {/* PROGRESS LINE */}
+        <motion.div
+          style={{ height: lineHeight }}
+          className="absolute left-1/2 -translate-x-1/2 top-6 w-[2px] bg-green-500 origin-top shadow-[0_0_10px_rgba(34,197,94,0.6)]"
+        />
+
+        {/* 🔵 GLOWING ACTIVE NODE */}
+        <motion.div
+          style={{
+            top: useTransform(scrollYProgress, [0, 1], ["5%", "95%"]),
+          }}
+          className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-green-500 shadow-[0_0_25px_rgba(34,197,94,0.9)] z-20"
+        />
+
+        {/* CARDS */}
         {events.map((evt) => (
           <TimelineCard key={evt.id} label={evt.label} side={evt.side} />
         ))}
