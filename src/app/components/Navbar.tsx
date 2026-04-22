@@ -59,7 +59,7 @@ export default function Navbar() {
 
       {/* CTA Buttons */}
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }} className="desktop-nav">
-        <Link href="#join" style={{
+        <Link href="/join" style={{
           padding: "0.45rem 1.2rem",
           borderRadius: "2rem",
           border: "1.5px solid var(--gray-300)",
