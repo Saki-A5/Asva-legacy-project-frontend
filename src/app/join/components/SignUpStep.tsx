@@ -49,16 +49,39 @@ export default function SignUpStep({
 };
 
   const handleSubmit = async () => {
-    const e = validate();
-    if (Object.keys(e).length) return setErrors(e);
+  const e = validate();
+  if (Object.keys(e).length) return setErrors(e);
 
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 1000));
+  setLoading(true);
+  try {
+    const res = await fetch("http://127.0.0.1:8000/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: form.username,
+        email: form.email,
+        password: form.password,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setErrors({
+        username: data.username?.[0],
+        email: data.email?.[0],
+        password: data.password?.[0],
+      });
+      return;
+    }
+
+    onNext({ ...form, reference_code: data.reference_code });
+  } catch {
+    setErrors({ email: "Network error — is the server running?" });
+  } finally {
     setLoading(false);
-
-    onNext(form);
-  };
-
+  }
+};
   return (
     <div className="flex flex-col gap-5">
       <h1 className="text-2xl font-bold">Create your account</h1>

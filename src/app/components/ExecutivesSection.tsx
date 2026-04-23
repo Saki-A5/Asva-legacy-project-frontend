@@ -1,75 +1,145 @@
-interface Executive {
+"use client";
+
+import Image from "next/image";
+
+type Executive = {
   name: string;
   role: string;
-  tagline: string;
-  imageSrc?: string;
-}
+  image: string;
+  objectPosition?: string;
+  bio?: string;
+};
 
 const executives: Executive[] = [
   {
-    name: "Mojoyinoluwa Sholotan",
+    name: "Emmanuel Francis",
     role: "President",
-    tagline: "To bring new innovations while managing such a productive team",
+    image: "/Francis.jpg",
+    objectPosition: "object-top",
+    bio: "Leads ASVA with a focus on innovation, structure, and student impact."
+  },
+  {
+    name: "Ayo Fauziyah",
+    role: "Vice President",
+    image: "/Fauziyah.jpg",
+    objectPosition: "object-top",
+    bio: "Supports executive coordination and drives strategic initiatives."
+  },
+  {
+    name: "Sarah Kelechi",
+    role: "General Secretary",
+    image: "/Kelechi.jpg",
+    objectPosition: "object-top",
+    bio: "Manages documentation, communication, and internal organization."
+  },
+  {
+    name: "Daniel Chinaza",
+    role: "Financial Secretary",
+    image: "/Naza.jpg",
+    objectPosition: "object-top",
+    bio: "Oversees financial records and accountability."
+  },
+  {
+    name: "Solomon Tolulope",
+    role: "Software Director",
+    image: "/tolu.jpg",
+    objectPosition: "object-top",
+    bio: "Builds and maintains ASVA digital systems and platforms."
+  },
+  {
+    name: "Ibrahim April",
+    role: "Public Relations Officer",
+    image: "/aptil.png",
+    objectPosition: "object-top",
+    bio: "Handles ASVA communication and public image."
+  },
+  {
+    name: "Effiom-Henshaw Marshall",
+    role: "Creative Director",
+    image: "/henshaw.jpg",
+    objectPosition: "object-top",
+    bio: "Leads visual identity and creative direction."
+  },
+  {
+    name: "Oluwole Seun",
+    role: "Assistant Creative Director",
+    image: "/seun.jpg",
+    objectPosition: "object-top",
+    bio: "Supports creative production and branding."
+  },
+  {
+    name: "Abiba Odekina",
+    role: "Director of External Affairs",
+    image: "/Abiba.jpg",
+    objectPosition: "object-center",
+    bio: "Manages external partnerships and collaborations."
+  },
+  {
+    name: "Akpan Benjamin",
+    role: "Hardware Director",
+    image: "/Benjamin.jpg",
+    objectPosition: "object-center",
+    bio: "Handles hardware systems and physical infrastructure."
   },
 ];
 
-interface ExecCardProps {
-  exec: Executive;
-}
-
-function ExecCard({ exec }: ExecCardProps) {
-  return (
-    <div className="relative w-[200px] aspect-[3/4] overflow-hidden rounded-xl bg-[#1a2e20] shadow-lg flex-shrink-0">
-      
-      {/* Photo background */}
-      {exec.imageSrc ? (
-        <img
-          src={exec.imageSrc}
-          alt={exec.name}
-          className="w-full h-full object-cover object-top"
-        />
-      ) : (
-        <div className="w-full h-full bg-gradient-to-br from-[#2d4a36] to-[#1a2e20] flex items-center justify-center">
-          <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center text-white/30 text-xl font-semibold">
-            {exec.name[0]}
-          </div>
-        </div>
-      )}
-
-      {/* Overlay text */}
-      <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/85 to-transparent">
-        <p className="text-white font-semibold text-sm leading-tight mb-1">
-          {exec.name}
-        </p>
-        <p className="text-green-400 text-xs font-medium mb-1">
-          {exec.role}
-        </p>
-        <p className="text-white/70 text-xs leading-relaxed">
-          {exec.tagline}
-        </p>
-      </div>
-    </div>
-  );
-}
-
 export default function ExecutivesSection() {
   return (
-    <section
-      id="execs"
-      className="px-6 py-16 max-w-6xl mx-auto"
-    >
-      {/* Section header badge */}
-      <div className="flex justify-center mb-12">
-        <div className="bg-green-600 text-white rounded-md px-10 py-2 font-semibold text-base">
-          Meet the Current Executives
-        </div>
+    <section id="execs" className="w-full bg-black py-20 px-6">
+      
+      {/* Header */}
+      <div className="text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-white">
+          Meet the Executives
+        </h2>
+        <p className="text-gray-500 mt-2 text-sm">
+          The leadership team driving ASVA forward
+        </p>
       </div>
 
-      {/* Cards row */}
-      <div className="flex flex-wrap justify-center gap-6">
-        {executives.map((exec) => (
-          <ExecCard key={exec.name} exec={exec} />
+      {/* Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
+
+        {executives.map((exec, index) => (
+          <div key={index} className="group [perspective:1000px]">
+
+            <div className="relative h-72 transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+
+              {/* FRONT */}
+              <div className="absolute inset-0 bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden [backface-visibility:hidden]">
+
+                <div className="p-4 text-center">
+                  <h3 className="text-white text-sm font-semibold">
+                    {exec.name}
+                  </h3>
+                  <p className="text-green-500 text-xs mt-1">
+                    {exec.role}
+                  </p>
+                </div>
+
+                <div className="relative w-full h-44 bg-black">
+                  <Image
+                    src={exec.image}
+                    alt={exec.name}
+                    fill
+                    className={`object-cover ${exec.objectPosition ?? "object-center"}`}
+                  />
+                </div>
+              </div>
+
+              {/* BACK */}
+              <div className="absolute inset-0 bg-black border border-white/10 rounded-2xl p-5 flex items-center justify-center text-center [transform:rotateY(180deg)] [backface-visibility:hidden]">
+
+                <p className="text-sm text-gray-300 leading-relaxed">
+                  {exec.bio}
+                </p>
+
+              </div>
+
+            </div>
+          </div>
         ))}
+
       </div>
     </section>
   );

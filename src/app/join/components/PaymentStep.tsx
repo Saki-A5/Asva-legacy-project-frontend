@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Check, Upload, Loader2, X } from "lucide-react";
+import { Copy, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { FormData } from "./types";
+
+const ACCOUNT_NUMBER = "0123456789";
+const ACCOUNT_NAME = "ASVA Student Association";
+const BANK_NAME = "First Bank Nigeria";
+const AMOUNT = "₦5,000";
 
 export default function PaymentStep({
   form,
@@ -13,30 +17,81 @@ export default function PaymentStep({
   form: FormData;
   onNext: () => void;
 }) {
-  const [copied, setCopied] = useState(false);
+  const [copiedAccount, setCopiedAccount] = useState(false);
+  const [copiedTx, setCopiedTx] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const tx = "ASVA-" + Math.random().toString(36).slice(2, 10);
+  const tx = form.reference_code ?? "ASVA-UNKNOWN";
 
-  const copy = () => {
+  const copyAccount = () => {
+    navigator.clipboard.writeText(ACCOUNT_NUMBER);
+    setCopiedAccount(true);
+    setTimeout(() => setCopiedAccount(false), 1500);
+  };
+
+  const copyTx = () => {
     navigator.clipboard.writeText(tx);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+    setCopiedTx(true);
+    setTimeout(() => setCopiedTx(false), 1500);
   };
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">Payment</h1>
+      <div>
+        <h1 className="text-2xl font-bold">Complete Payment</h1>
+        <p className="text-sm text-gray-500 mt-1">
+          Transfer <span className="font-semibold text-gray-700">{AMOUNT}</span> to the account below to activate your membership.
+        </p>
+      </div>
 
-      <div className="bg-green-50 p-5 rounded-2xl">
-        <p className="text-sm">Transaction ID</p>
+      {/* Bank details */}
+      <div className="bg-green-50 rounded-2xl p-5 flex flex-col gap-4">
 
-        <div className="flex justify-between mt-2 bg-white p-3 rounded-xl">
-          <span className="font-mono">{tx}</span>
-          <button onClick={copy} className="text-green-600 text-sm">
-            {copied ? "Copied" : <Copy size={14} />}
-          </button>
+        {/* Amount */}
+        <div className="flex items-center justify-between">
+          <span className="text-xs text-gray-500 uppercase tracking-wide font-medium">Amount</span>
+          <span className="text-2xl font-bold text-green-600">{AMOUNT}</span>
         </div>
+
+        <div className="h-px bg-green-100" />
+
+        {/* Bank info */}
+        <div>
+          <p className="text-xs text-gray-400">{BANK_NAME}</p>
+          <p className="text-sm font-semibold text-gray-800 mt-0.5">{ACCOUNT_NAME}</p>
+        </div>
+
+        {/* Account number */}
+        <div className="flex flex-col gap-1.5">
+          <p className="text-xs text-gray-500 font-medium">Account Number</p>
+          <div className="flex items-center justify-between bg-white rounded-xl px-4 py-3">
+            <span className="font-mono font-bold tracking-widest text-gray-900">{ACCOUNT_NUMBER}</span>
+            <button onClick={copyAccount} className="flex items-center gap-1.5 text-xs text-green-600 font-medium">
+              {copiedAccount ? <><Check size={13} /> Copied</> : <><Copy size={13} /> Copy</>}
+            </button>
+          </div>
+        </div>
+
+        {/* Transaction ID */}
+        <div className="flex flex-col gap-1.5">
+          <p className="text-xs text-gray-500 font-medium">Your Transaction Reference</p>
+          <div className="flex items-center justify-between bg-white rounded-xl px-4 py-3">
+            <span className="font-mono font-bold text-gray-900 text-sm">{tx}</span>
+            <button onClick={copyTx} className="flex items-center gap-1.5 text-xs text-green-600 font-medium ml-3 shrink-0">
+              {copiedTx ? <><Check size={13} /> Copied</> : <><Copy size={13} /> Copy</>}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Instruction */}
+      <div className="flex gap-3 bg-amber-50 border border-amber-100 rounded-xl px-4 py-3">
+        <span className="text-amber-500 text-base shrink-0 mt-0.5">⚠️</span>
+        <p className="text-xs text-amber-700 leading-relaxed">
+          When making the transfer, paste your <strong>Transaction Reference</strong> in
+          the <strong>narration / description</strong> field of your bank app. This is
+          how we identify and verify your payment.
+        </p>
       </div>
 
       <Button
@@ -46,10 +101,10 @@ export default function PaymentStep({
           setLoading(false);
           onNext();
         }}
-        className="bg-green-500 h-11 rounded-xl"
+        className="bg-green-500 hover:bg-green-600 h-11 rounded-xl"
       >
         {loading && <Loader2 className="animate-spin mr-2" size={16} />}
-        I've Paid
+        I've Made the Transfer
       </Button>
     </div>
   );

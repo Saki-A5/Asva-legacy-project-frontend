@@ -27,6 +27,14 @@ body {
   @apply bg-black text-black;
 }
 
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
 @layer base {
   .theme {
     --font-heading: var(--font-sans);
