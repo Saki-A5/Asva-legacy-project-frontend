@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Rocket, Eye } from "lucide-react";
+import Image from "next/image";
 
 /* -------------------- CARD -------------------- */
 
@@ -82,9 +83,13 @@ export default function WhoWeAreSection() {
 
           {/* placeholder image layer */}
           <div className="relative w-full h-full flex items-center justify-center">
-            <span className="text-white/30 text-sm">
-              Group Photo
-            </span>
+            <Image 
+               src="/Rectangle 5.png"   // 👈 put your actual image in /public
+               alt="ASVA Group Photo"
+               fill
+               className="object-cover rounded-xl"
+              priority
+            />
           </div>
         </motion.div>
 

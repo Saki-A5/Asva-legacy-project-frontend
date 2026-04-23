@@ -76,16 +76,22 @@ export default function JourneySection() {
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section className="max-w-3xl mx-auto px-6 py-16">
+    <section id="history" className="max-w-3xl mx-auto px-6 py-16">
       {/* Title */}
       <motion.h2
-        initial={{ opacity: 0, y: 25 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-4xl md:text-5xl font-extrabold text-center mb-12"
-      >
-        Our Journey So Far
-      </motion.h2>
+  initial={{ opacity: 0, y: 30, scale: 0.98 }}
+  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+  transition={{ duration: 0.6, ease: "easeOut" }}
+  viewport={{ once: true }}
+  className="text-4xl md:text-6xl font-extrabold text-center mb-12 text-white relative"
+>
+  <span className="bg-gradient-to-r from-green-400 via-emerald-300 to-white bg-clip-text text-transparent">
+    Our Journey So Far
+  </span>
+
+  {/* glow effect */}
+  <span className="absolute inset-0 blur-2xl opacity-20 bg-green-500 -z-10" />
+</motion.h2>
 
       {/* TIMELINE WRAPPER */}
       <div ref={containerRef} className="relative">
