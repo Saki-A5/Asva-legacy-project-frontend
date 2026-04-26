@@ -83,43 +83,53 @@ export default function SignUpStep({
   }
 };
   return (
-    <div className="flex flex-col gap-5">
-      <h1 className="text-2xl font-bold">Create your account</h1>
+  <div className="w-full flex justify-center px-4 sm:px-6">
+    
+    {/* Card Container */}
+    <div className="w-full max-w-md bg-zinc-900 border border-white/10 rounded-2xl p-6 sm:p-8 shadow-xl">
 
-      <div className="flex flex-col gap-4">
-  {fields.map((field) => (
-    <div key={field.name} className="flex flex-col gap-1.5">
-      <Label>{field.label}</Label>
+      <div className="flex flex-col gap-5">
+        <h1 className="text-2xl font-bold text-white">
+          Create your account
+        </h1>
 
-      <Input
-        type={field.type}
-        value={(form as any)[field.name]}
-        onChange={(e) =>
-          setForm({ ...form, [field.name]: e.target.value })
-        }
-        className={cn(
-          "h-11 rounded-xl border border-gray-800 text-white",
-          errors[field.name as keyof FormData] && "border-red-500"
-        )}
-      />
+        <div className="flex flex-col gap-4">
+          {fields.map((field) => (
+            <div key={field.name} className="flex flex-col gap-1.5">
+              <Label className="text-gray-300">{field.label}</Label>
 
-      {errors[field.name as keyof FormData] && (
-        <p className="text-xs text-red-500">
-          {errors[field.name as keyof FormData]}
-        </p>
-      )}
+              <Input
+                type={field.type}
+                value={(form as any)[field.name]}
+                onChange={(e) =>
+                  setForm({ ...form, [field.name]: e.target.value })
+                }
+                className={cn(
+                  "h-11 rounded-xl border border-gray-800 bg-black text-white focus:border-green-500",
+                  errors[field.name as keyof FormData] && "border-red-500"
+                )}
+              />
+
+              {errors[field.name as keyof FormData] && (
+                <p className="text-xs text-red-500">
+                  {errors[field.name as keyof FormData]}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <Button
+          onClick={handleSubmit}
+          disabled={loading}
+          className="h-11 bg-green-500 hover:bg-green-600 rounded-xl text-white"
+        >
+          {loading && <Loader2 className="animate-spin mr-2" size={16} />}
+          Continue to Payment
+        </Button>
+      </div>
+
     </div>
-  ))}
-</div>
-
-      <Button
-        onClick={handleSubmit}
-        disabled={loading}
-        className="h-11 bg-green-500 rounded-xl"
-      >
-        {loading && <Loader2 className="animate-spin mr-2" size={16} />}
-        Continue to Payment
-      </Button>
-    </div>
-  );
+  </div>
+);
 }
