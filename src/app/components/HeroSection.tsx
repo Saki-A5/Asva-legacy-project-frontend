@@ -8,7 +8,7 @@ export default function HeroSection() {
   return (
     <section
       id="overview"
-      className="relative mx-4 flex items-end h-[520px] overflow-hidden rounded-2xl"
+      className="relative flex items-end h-screen sm:h-[520px] sm:mx-4 overflow-hidden sm:rounded-2xl"
     >
       <Image
         src="/hero-image.png"
@@ -24,7 +24,7 @@ export default function HeroSection() {
 
       {/* Animated content */}
       <motion.div
-        className="relative z-20 w-[95%] pl-10 pb-10 pt-[280px]"
+        className="relative z-20 w-[95%] pl-5 sm:pl-10 pb-10 pt-[280px]"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
