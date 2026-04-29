@@ -46,9 +46,9 @@ export default function LoginPage() {
       return;
     }
 
-    // Store tokens
-    localStorage.setItem("access_token", data.access);
-    localStorage.setItem("refresh_token", data.refresh);
+    // Store tokens in cookies so middleware can read them
+    document.cookie = `access_token=${data.access}; path=/; max-age=${60 * 60 * 24 * 7}`;
+    document.cookie = `refresh_token=${data.refresh}; path=/; max-age=${60 * 60 * 24 * 30}`;
 
     router.push("/dashboard");
   } catch {

@@ -8,7 +8,7 @@ export default function HeroSection() {
   return (
     <section
       id="overview"
-      className="relative flex items-end h-screen sm:h-[520px] sm:mx-4 overflow-hidden sm:rounded-2xl"
+      className="relative flex items-end h-[520px] sm:mx-4 overflow-hidden sm:rounded-2xl"
     >
       <Image
         src="/hero-image.png"
