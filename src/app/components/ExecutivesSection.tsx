@@ -20,7 +20,7 @@ const executives: Executive[] = [
     bio: "Leads ASVA with a focus on innovation, structure, and student impact.",
   },
   {
-    name: "Ayo Fauziyah",
+    name: "Oladejo Fausiyah",
     role: "Vice President",
     image: "/Fauziyah.jpg",
     objectPosition: "object-top",
@@ -48,7 +48,7 @@ const executives: Executive[] = [
     bio: "Builds and maintains ASVA digital systems and platforms.",
   },
   {
-    name: "Ibrahim April",
+    name: "Apakama April",
     role: "Public Relations Officer",
     image: "/aptil.png",
     objectPosition: "object-top",
@@ -62,7 +62,7 @@ const executives: Executive[] = [
     bio: "Leads visual identity and creative direction.",
   },
   {
-    name: "Oluwole Seun",
+    name: "Oluwole Oluwaseun",
     role: "Assistant Creative Director",
     image: "/seun.jpg",
     objectPosition: "object-top",
