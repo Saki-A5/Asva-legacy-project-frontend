@@ -11,31 +11,39 @@ import {
   LogOut,
   X,
 } from "lucide-react";
+
 import { useRouter } from "next/navigation";
 import { Tab } from "@/app/join/components/types";
 import { API_URL } from "@/lib/config";
 
-const navItems: { id: Tab; label: string; icon: React.ReactNode }[] = [
-  { id: "overview", label: "Overview", icon: <LayoutDashboard size={16} /> },
-  { id: "documents", label: "Documents", icon: <FileText size={16} /> },
-  { id: "links", label: "Links", icon: <Link2 size={16} /> },
-  { id: "internships", label: "Internships", icon: <Briefcase size={16} /> },
-  { id: "certificates", label: "Certificates", icon: <Award size={16} /> },
-  { id: "teams", label: "Join Teams", icon: <Users size={16} /> },
+import { Button } from "@/components/ui/button";
+
+const navItems: { id: Tab; label: string; icon: React.ElementType }[] = [
+  { id: "overview", label: "Overview", icon: LayoutDashboard },
+  { id: "documents", label: "Documents", icon: FileText },
+  { id: "links", label: "Links", icon: Link2 },
+  { id: "internships", label: "Internships", icon: Briefcase },
+  { id: "certificates", label: "Certificates", icon: Award },
+  { id: "teams", label: "Join Teams", icon: Users },
 ];
 
-export default function Sidebar({ active, onSelect, open, onClose }: any) {
+export default function Sidebar({
+  active,
+  onSelect,
+  open,
+  onClose,
+}: any) {
   const router = useRouter();
 
   const handleLogout = async () => {
     const refreshToken = document.cookie
       .split("; ")
-      .find((row) => row.startsWith("refresh_token="))
+      .find((r) => r.startsWith("refresh_token="))
       ?.split("=")[1];
 
     const accessToken = document.cookie
       .split("; ")
-      .find((row) => row.startsWith("access_token="))
+      .find((r) => r.startsWith("access_token="))
       ?.split("=")[1];
 
     try {
@@ -43,15 +51,16 @@ export default function Sidebar({ active, onSelect, open, onClose }: any) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+          ...(accessToken
+            ? { Authorization: `Bearer ${accessToken}` }
+            : {}),
         },
         body: JSON.stringify({ refresh: refreshToken }),
       });
     } catch {
-      // even if the request fails, clear cookies and redirect
+      // ignore
     }
 
-    // clear cookies
     document.cookie = "access_token=; path=/; max-age=0";
     document.cookie = "refresh_token=; path=/; max-age=0";
 
@@ -60,58 +69,77 @@ export default function Sidebar({ active, onSelect, open, onClose }: any) {
 
   return (
     <>
+      {/* Mobile overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/40 z-30 lg:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 lg:hidden"
           onClick={onClose}
         />
       )}
 
       <aside
         className={cn(
-          "fixed top-0 left-0 h-full w-64 bg-gray-900 flex flex-col z-40 transition-transform",
+          "fixed top-0 left-0 h-full w-72 z-40 flex flex-col",
+          "bg-zinc-950 border-r border-zinc-800",
+          "transition-transform",
           open ? "translate-x-0" : "-translate-x-full",
           "lg:translate-x-0 lg:static"
         )}
       >
         {/* Header */}
-        <div className="flex justify-between items-center px-6 h-16 border-b border-white/10">
-          <span className="text-white font-bold">ASVA</span>
-          <button className="lg:hidden text-white" onClick={onClose}>
+        <div className="h-16 flex items-center justify-between px-6 border-b border-zinc-800">
+          <h1 className="text-white font-semibold tracking-wide">ASVA</h1>
+
+          <button
+            onClick={onClose}
+            className="lg:hidden text-zinc-400 hover:text-white transition"
+          >
             <X size={18} />
           </button>
         </div>
 
-        {/* Nav */}
-        <div className="flex-1 px-3 mt-4 flex flex-col gap-1">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => {
-                onSelect(item.id);
-                onClose();
-              }}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded-xl text-sm",
-                active === item.id
-                  ? "bg-green-500 text-white"
-                  : "text-gray-400 hover:text-white hover:bg-white/10"
-              )}
-            >
-              {item.icon}
-              {item.label}
-            </button>
-          ))}
-        </div>
+        {/* Navigation */}
+        <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = active === item.id;
+
+            return (
+              <button
+                key={item.id}
+                onClick={() => {
+                  onSelect(item.id);
+                  onClose();
+                }}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition",
+                  "hover:bg-zinc-900",
+                  isActive
+                    ? "bg-green-500/10 text-green-400 border border-green-500/20"
+                    : "text-zinc-400 hover:text-white"
+                )}
+              >
+                <Icon size={16} />
+                {item.label}
+
+                {isActive && (
+                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-green-400" />
+                )}
+              </button>
+            );
+          })}
+        </nav>
 
         {/* Logout */}
-        <div className="p-4 border-t border-white/10">
-          <button
+        <div className="p-4 border-t border-zinc-800">
+          <Button
             onClick={handleLogout}
-            className="text-sm text-gray-400 hover:text-red-400 flex items-center gap-2 transition-colors"
+            variant="ghost"
+            className="w-full justify-start text-zinc-400 hover:text-red-400 hover:bg-red-500/10"
           >
-            <LogOut size={14} /> Logout
-          </button>
+            <LogOut size={14} className="mr-2" />
+            Logout
+          </Button>
         </div>
       </aside>
     </>
