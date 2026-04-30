@@ -4,11 +4,13 @@ import { useState } from "react";
 import { Copy, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FormData } from "./types";
+import { API_URL } from "@/lib/config";
 
 const ACCOUNT_NUMBER = "0123456789";
 const ACCOUNT_NAME = "ASVA Student Association";
 const BANK_NAME = "First Bank Nigeria";
 const AMOUNT = "₦5,000";
+const AMOUNT_VALUE = 5000;
 
 export default function PaymentStep({
   form,
@@ -20,6 +22,7 @@ export default function PaymentStep({
   const [copiedAccount, setCopiedAccount] = useState(false);
   const [copiedTx, setCopiedTx] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const tx = form.reference_code ?? "ASVA-UNKNOWN";
 
@@ -35,6 +38,40 @@ export default function PaymentStep({
     setTimeout(() => setCopiedTx(false), 1500);
   };
 
+  const handleSubmit = async () => {
+    setError("");
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/payments/claim`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          reference_code: tx,
+          email: form.email,
+          amount: AMOUNT_VALUE,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(
+          data.reference_code?.[0] ??
+          data.email?.[0] ??
+          data.amount?.[0] ??
+          "Something went wrong. Please try again."
+        );
+        return;
+      }
+
+      onNext();
+    } catch {
+      setError("Network error — is the server running?");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -46,8 +83,6 @@ export default function PaymentStep({
 
       {/* Bank details */}
       <div className="bg-green-50 rounded-2xl p-5 flex flex-col gap-4">
-
-        {/* Amount */}
         <div className="flex items-center justify-between">
           <span className="text-xs text-gray-500 uppercase tracking-wide font-medium">Amount</span>
           <span className="text-2xl font-bold text-green-600">{AMOUNT}</span>
@@ -55,7 +90,6 @@ export default function PaymentStep({
 
         <div className="h-px bg-green-100" />
 
-        {/* Bank info */}
         <div>
           <p className="text-xs text-gray-400">{BANK_NAME}</p>
           <p className="text-sm font-semibold text-gray-800 mt-0.5">{ACCOUNT_NAME}</p>
@@ -94,13 +128,14 @@ export default function PaymentStep({
         </p>
       </div>
 
+      {/* Error */}
+      {error && (
+        <p className="text-xs text-red-500">{error}</p>
+      )}
+
       <Button
-        onClick={async () => {
-          setLoading(true);
-          await new Promise((r) => setTimeout(r, 1000));
-          setLoading(false);
-          onNext();
-        }}
+        onClick={handleSubmit}
+        disabled={loading}
         className="bg-green-500 hover:bg-green-600 h-11 rounded-xl"
       >
         {loading && <Loader2 className="animate-spin mr-2" size={16} />}

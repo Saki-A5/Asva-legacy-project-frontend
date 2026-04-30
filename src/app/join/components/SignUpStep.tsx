@@ -58,6 +58,7 @@ export default function SignUpStep({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        name: form.name,
         username: form.username,
         email: form.email,
         password: form.password,

@@ -11,7 +11,9 @@ import {
   LogOut,
   X,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Tab } from "@/app/join/components/types";
+import { API_URL } from "@/lib/config";
 
 const navItems: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: "overview", label: "Overview", icon: <LayoutDashboard size={16} /> },
@@ -22,12 +24,40 @@ const navItems: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: "teams", label: "Join Teams", icon: <Users size={16} /> },
 ];
 
-export default function Sidebar({
-  active,
-  onSelect,
-  open,
-  onClose,
-}: any) {
+export default function Sidebar({ active, onSelect, open, onClose }: any) {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    const refreshToken = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("refresh_token="))
+      ?.split("=")[1];
+
+    const accessToken = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("access_token="))
+      ?.split("=")[1];
+
+    try {
+      await fetch(`${API_URL}/api/auth/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+        },
+        body: JSON.stringify({ refresh: refreshToken }),
+      });
+    } catch {
+      // even if the request fails, clear cookies and redirect
+    }
+
+    // clear cookies
+    document.cookie = "access_token=; path=/; max-age=0";
+    document.cookie = "refresh_token=; path=/; max-age=0";
+
+    router.push("/login");
+  };
+
   return (
     <>
       {open && (
@@ -76,7 +106,10 @@ export default function Sidebar({
 
         {/* Logout */}
         <div className="p-4 border-t border-white/10">
-          <button className="text-sm text-gray-400 hover:text-red-400 flex items-center gap-2">
+          <button
+            onClick={handleLogout}
+            className="text-sm text-gray-400 hover:text-red-400 flex items-center gap-2 transition-colors"
+          >
             <LogOut size={14} /> Logout
           </button>
         </div>
