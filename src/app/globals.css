@@ -1,19 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
 @import "tailwindcss-animate";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-
-
 :root {
   --border: 240 5% 90%;
   --input: 240 5% 90%;
   --ring: 240 5% 64.9%;
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
   --primary: 142 76% 36%;
   --primary-foreground: 355 100% 97%;
 }
@@ -108,7 +105,7 @@ body {
     --sidebar-ring: oklch(0.556 0 0);
   }
   * {
-   @apply border-gray-200;
+   /* @apply border-border outline-ring/50; */
   }
   body {
     @apply bg-background text-foreground;
