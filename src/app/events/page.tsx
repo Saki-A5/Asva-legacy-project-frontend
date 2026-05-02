@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { useMemo } from "react";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 type Event = {
   id: number;
@@ -53,6 +55,17 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen bg-black text-white px-4 sm:px-6 lg:px-10 py-12">
+
+      {/* Back button */}
+<div className="max-w-6xl mx-auto mb-6">
+  <Link
+    href="/"
+    className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition text-sm"
+  >
+    <ArrowLeft size={14} />
+    Back to home
+  </Link>
+</div>
 
       {/* Header */}
       <div className="max-w-6xl mx-auto mb-10">

@@ -34,7 +34,7 @@ const executives: Executive[] = [
     bio: "Manages documentation, communication, and internal organization.",
   },
   {
-    name: "Daniel Chinaza",
+    name: "Omile Chinaza Faustina",
     role: "Financial Secretary",
     image: "/Naza.jpg",
     objectPosition: "object-top",

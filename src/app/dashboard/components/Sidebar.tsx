@@ -64,7 +64,7 @@ export default function Sidebar({
     document.cookie = "access_token=; path=/; max-age=0";
     document.cookie = "refresh_token=; path=/; max-age=0";
 
-    router.push("/login");
+    router.replace("/login");
   };
 
   return (

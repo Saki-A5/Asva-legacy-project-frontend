@@ -173,8 +173,8 @@ export default function Navbar() {
             Join ASVA
           </Link>
 
-          <Link
-            href="#events"
+          <Link 
+            href="/events" 
             className="px-5 py-2 text-sm rounded-full bg-green-500 hover:bg-green-600 text-white transition"
           >
             Upcoming Events
@@ -227,10 +227,10 @@ export default function Navbar() {
               Join ASVA
             </Link>
 
-            <Link
-              href="#events"
-              className="px-5 py-2 text-sm rounded-full bg-green-500 text-white"
-            >
+            <Link 
+            href="/events" 
+            className="px-5 py-2 text-sm rounded-full bg-green-500 text-white"
+            > 
               Upcoming Events
             </Link>
 
