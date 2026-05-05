@@ -11,6 +11,8 @@ import CertificatesTab from "./components/CertificatesTab";
 import JoinTeams from "./components/CommunityTeams";
 import { Tab } from "@/app/join/components/types";
 
+export const dynamic = "force-dynamic";
+
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);

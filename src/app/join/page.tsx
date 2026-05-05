@@ -8,6 +8,8 @@ import PaymentStep from "./components/PaymentStep";
 import PendingStep from "./components/PendingStep";
 import { Step, FormData } from "./components/types";
 
+export const dynamic = "force-dynamic";
+
 export default function JoinPage() {
   const router = useRouter();
 

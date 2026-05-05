@@ -41,6 +41,8 @@ const events: Event[] = [
   },
 ];
 
+export const dynamic = "force-dynamic";
+
 export default function EventsPage() {
   const upcomingEvents = useMemo(() => {
     const today = new Date();
