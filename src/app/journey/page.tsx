@@ -2,12 +2,30 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { Rocket, Sparkles, Globe, Target } from "lucide-react";
+import MainNavbar from "../components/MainNavbar";
 
-const timeline = [
-  { year: "2020", text: "ASVA was founded to strengthen student representation." },
-  { year: "2021", text: "Launched first academic support initiative." },
-  { year: "2022", text: "Hosted major university-wide conference." },
-  { year: "2023", text: "Expanded partnerships and leadership programs." },
+const sections = [
+  {
+    icon: <Sparkles size={28} />,
+    title: "The Beginning",
+    text: "ASVA was founded to create a platform where students could lead, innovate, and shape their academic experience.",
+  },
+  {
+    icon: <Rocket size={28} />,
+    title: "Rapid Growth",
+    text: "We launched academic initiatives, events, and leadership programs that transformed student engagement.",
+  },
+  {
+    icon: <Globe size={28} />,
+    title: "Expansion",
+    text: "Partnerships, conferences, and collaborations expanded our reach across disciplines.",
+  },
+  {
+    icon: <Target size={28} />,
+    title: "The Future",
+    text: "We continue building a forward-thinking community focused on innovation and global impact.",
+  },
 ];
 
 export default function JourneyPage() {
@@ -15,57 +33,76 @@ export default function JourneyPage() {
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.2", "end 0.9"],
+    offset: ["start start", "end end"],
   });
 
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
 
   return (
-    <main ref={ref} className="bg-black text-white px-6 py-20">
-      <h1 className="text-center text-5xl font-extrabold mb-20">
-        Our Journey
-      </h1>
+    <>
+      <MainNavbar />
 
-      <div className="relative max-w-3xl mx-auto">
-        {/* LINE */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-gray-700" />
+      <main ref={ref} className="bg-black text-white pt-24">
 
-        {/* PROGRESS */}
-        <motion.div
-          style={{ height: lineHeight }}
-          className="absolute left-1/2 top-0 w-[2px] bg-green-500 origin-top"
-        />
-
-        {timeline.map((item, i) => (
-          <motion.div
-            key={i}
-            className="mb-16 flex items-center justify-between"
-            initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-          >
-            <div className="w-1/2 pr-6 text-right">
-              {i % 2 === 0 && (
-                <>
-                  <h3 className="text-green-400 font-bold">{item.year}</h3>
-                  <p className="text-gray-400">{item.text}</p>
-                </>
-              )}
-            </div>
-
-            {/* DOT */}
-            <div className="w-4 h-4 bg-green-500 rounded-full z-10 shadow-[0_0_20px_rgba(34,197,94,0.8)]" />
-
-            <div className="w-1/2 pl-6">
-              {i % 2 !== 0 && (
-                <>
-                  <h3 className="text-green-400 font-bold">{item.year}</h3>
-                  <p className="text-gray-400">{item.text}</p>
-                </>
-              )}
-            </div>
+        {/* HERO */}
+        <section className="h-[70vh] flex items-center justify-center text-center px-6">
+          <motion.div style={{ scale }}>
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-4">
+              Our Journey
+            </h1>
+            <p className="text-gray-400 max-w-xl mx-auto">
+              Every step tells a story of growth, impact, and transformation.
+            </p>
           </motion.div>
+        </section>
+
+        {/* STORY SECTIONS */}
+        {sections.map((section, i) => (
+          <motion.section
+            key={i}
+            className="min-h-screen flex flex-col md:flex-row items-center justify-center gap-10 px-6 max-w-6xl mx-auto"
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            {/* TEXT */}
+            <div className="flex-1">
+              <div className="text-green-400 mb-4">{section.icon}</div>
+
+              <h2 className="text-3xl font-bold mb-4">
+                {section.title}
+              </h2>
+
+              <p className="text-gray-400 leading-relaxed">
+                {section.text}
+              </p>
+            </div>
+
+            {/* VISUAL BLOCK */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="flex-1 h-[300px] rounded-2xl bg-gradient-to-br from-green-500/20 to-transparent border border-white/10 flex items-center justify-center"
+            >
+              <span className="text-gray-500">
+                Image / Illustration
+              </span>
+            </motion.div>
+          </motion.section>
         ))}
-      </div>
-    </main>
+
+        {/* FINAL IMPACT */}
+        <section className="text-center py-24 px-6">
+          <h2 className="text-4xl font-bold mb-6">
+            And We're Just Getting Started
+          </h2>
+
+          <p className="text-gray-400 max-w-xl mx-auto">
+            The journey continues with innovation, leadership, and limitless possibilities.
+          </p>
+        </section>
+
+      </main>
+    </>
   );
 }

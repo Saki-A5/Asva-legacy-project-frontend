@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
+import MainNavbar from "../components/MainNavbar";
 
 export default function AboutPage() {
   const ref = useRef(null);
@@ -15,9 +16,11 @@ export default function AboutPage() {
   const yHero = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
 
   return (
+    <>
+    <MainNavbar />
     <main
       ref={ref}
-      className="bg-black text-white overflow-hidden"
+      className="bg-black text-white overflow-hidden pt-24"
     >
       {/* HERO */}
       <section className="h-[80vh] flex items-center justify-center relative text-center px-6">
@@ -105,5 +108,6 @@ export default function AboutPage() {
         </button>
       </section>
     </main>
+  </>
   );
 }
