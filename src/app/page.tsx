@@ -7,6 +7,8 @@ import ExecutivesSection from "./components/ExecutivesSection";
 import Footer from "./components/Footer";
 import EventsTicker from "./components/events";
 
+console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
+
 export default function Home() {
   return (
     <main>
