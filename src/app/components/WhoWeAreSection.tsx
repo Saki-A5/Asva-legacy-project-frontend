@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Rocket, Eye } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 /* -------------------- CARD -------------------- */
 
@@ -106,10 +107,13 @@ export default function WhoWeAreSection() {
           </h2>
 
           <p className="text-sm text-gray-700 leading-relaxed mb-6">
-            ASVA is the recognized student association committed to representing student interests,
-            promoting academic excellence, and fostering leadership and collaboration across the
-            university. We serve as a bridge between students, faculty, and administration —
-            ensuring transparency, engagement, and growth.
+            The ABUAD Salt Valley Association (ASVA), established in 2016, is a student-led
+            innovation community focused on advancing creativity, leadership, and
+            technological excellence within Afe Babalola University.
+
+            Through interdisciplinary collaboration and hands-on programs in technology,
+            media, and design, ASVA equips students with real-world skills and prepares them
+            for global opportunities.
           </p>
 
           {/* CARDS */}
@@ -128,6 +132,14 @@ export default function WhoWeAreSection() {
               delay={0.2}
             />
           </div>
+          <Link href="/about">
+            <motion.div
+              whileHover={{ x: 6 }}
+              className="mt-6 inline-flex items-center gap-2 text-green-700 font-medium cursor-pointer"
+            >
+              Learn more about us →
+            </motion.div>
+          </Link>
         </motion.div>
       </div>
     </section>

@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 
 interface TimelineEvent {
   id: number;
@@ -10,10 +11,10 @@ interface TimelineEvent {
 }
 
 const events: TimelineEvent[] = [
-  { id: 1, label: "Founded to strengthen student representation", side: "right" },
-  { id: 2, label: "First academic support initiative launched", side: "left" },
-  { id: 3, label: "Hosted major campus-wide conference", side: "right" },
-  { id: 4, label: "Expanded partnerships and student opportunities", side: "left" },
+  { id: 1, label: "2016 — ASVA was founded to promote innovation and student leadership", side: "right" },
+  { id: 2, label: "Launched academic and technical training initiatives across departments", side: "left" },
+  { id: 3, label: "Hosted major conferences like EPIC and DEVCON", side: "right" },
+  { id: 4, label: "Expanded into AI, design, and filmmaking programs", side: "left" },
 ];
 
 function TimelineCard({
@@ -117,6 +118,16 @@ export default function JourneySection() {
         {events.map((evt) => (
           <TimelineCard key={evt.id} label={evt.label} side={evt.side} />
         ))}
+      </div>
+      <div className="flex justify-center mt-12">
+        <Link href="/journey">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            className="px-6 py-3 rounded-full bg-green-500 text-black font-semibold shadow-lg hover:shadow-green-500/40 transition"
+          >
+            Explore Full Journey →
+          </motion.button>
+        </Link>
       </div>
     </section>
   );
