@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FormData } from "./types";
+import { API_URL } from "@/lib/config";
 
 export default function SignUpStep({
   onNext,
@@ -54,7 +55,7 @@ export default function SignUpStep({
 
   setLoading(true);
   try {
-    const res = await fetch("http://127.0.0.1:8000/api/auth/register", {
+    const res = await fetch(`${API_URL}/api/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

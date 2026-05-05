@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, ArrowLeft } from "lucide-react";
 import Image from "next/image";
-
+import { API_URL } from "@/lib/config";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -31,7 +31,7 @@ export default function LoginPage() {
 
   setLoading(true);
   try {
-    const res = await fetch("http://127.0.0.1:8000/api/auth/login", {
+    const res = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

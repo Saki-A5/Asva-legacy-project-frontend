@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { API_URL } from "@/lib/config";
 
 type Event = {
   id: number;
