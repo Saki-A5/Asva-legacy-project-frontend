@@ -5,6 +5,7 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 export default function MainNavbar() {
   const pathname = usePathname();
@@ -24,6 +25,7 @@ export default function MainNavbar() {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Journey", href: "/journey" },
+    { name: "Contact Us", href: "/contact" },
   ];
 
   return (
@@ -38,7 +40,13 @@ export default function MainNavbar() {
           
           {/* LOGO */}
           <Link href="/" className="text-white font-bold text-lg">
-            ASVA
+            <Image
+              src="/asva logo.png"
+              alt="ASVA Logo"
+              width={36}
+              height={36}
+              priority
+              />
           </Link>
 
           {/* DESKTOP LINKS */}

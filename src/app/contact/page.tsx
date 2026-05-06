@@ -3,9 +3,14 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, Instagram, Send } from "lucide-react";
 import { useState } from "react";
+import MainNavbar from "../components/MainNavbar";
+import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function ContactPage() {
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -19,7 +24,17 @@ export default function ContactPage() {
   };
 
   return (
+    <>
+    <MainNavbar />
     <main className="bg-black text-white min-h-screen px-6 py-20">
+      {/* Back Button */}
+      <button
+        onClick={() => router.back()}
+        className="absolute top-6 left-6 flex items-center gap-2 text-gray-400 hover:text-white transition text-sm"
+      >
+        <ArrowLeft size={16} />
+        Back
+      </button>
 
       {/* HERO */}
       <motion.div
@@ -143,5 +158,6 @@ export default function ContactPage() {
       </div>
 
     </main>
+    </>
   );
 }

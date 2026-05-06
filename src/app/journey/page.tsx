@@ -2,6 +2,7 @@
 
 import Scene from "./components/scene";
 import { Rocket, GraduationCap, Users, Sparkles, Cpu } from "lucide-react";
+import MainNavbar from "../components/MainNavbar";
 
 const scenes = [
   {
@@ -50,6 +51,8 @@ const scenes = [
 
 export default function JourneyPage() {
   return (
+    <>
+    <MainNavbar />
     <main className="bg-black text-white overflow-x-hidden">
 
       {/* HERO */}
@@ -76,5 +79,6 @@ export default function JourneyPage() {
       </section>
 
     </main>
+    </>
   );
 }
