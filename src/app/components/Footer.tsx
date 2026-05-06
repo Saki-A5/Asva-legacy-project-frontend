@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Mail, Phone, Instagram } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -32,18 +33,46 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* CTA */}
+        {/* CONTACT (UPGRADED) */}
         <div>
           <p className="text-white font-semibold text-sm mb-4">
-            Get Involved
+            Contact Us
           </p>
 
-          <Link
-            href="#join"
-            className="inline-block bg-green-500 hover:bg-green-600 text-white text-sm font-medium px-5 py-2 rounded-full transition"
-          >
-            Join ASVA
-          </Link>
+          <div className="space-y-3 text-sm">
+            
+            <div className="flex items-center gap-2 text-white/60">
+              <Mail size={14} />
+              <span>asvaabuad@gmail.com</span>
+            </div>
+
+            <div className="flex items-center gap-2 text-white/60">
+              <Phone size={14} />
+              <span>0903-823-1348</span>
+            </div>
+
+            <div className="flex items-center gap-2 text-white/60">
+              <Instagram size={14} />
+              <span>@asvaabuad</span>
+            </div>
+
+            {/* LINK TO FULL PAGE */}
+            <Link
+              href="/contact"
+              className="inline-block mt-3 text-green-400 hover:text-green-300 transition"
+            >
+              View Contact Page →
+            </Link>
+
+            {/* CTA MOVED HERE */}
+            <Link
+              href="#join"
+              className="inline-block mt-4 bg-green-500 hover:bg-green-600 text-black text-sm font-medium px-5 py-2 rounded-full transition"
+            >
+              Join ASVA
+            </Link>
+
+          </div>
         </div>
       </div>
 
