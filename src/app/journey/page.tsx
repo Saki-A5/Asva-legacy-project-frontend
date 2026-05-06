@@ -1,108 +1,80 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { Rocket, Sparkles, Globe, Target } from "lucide-react";
-import MainNavbar from "../components/MainNavbar";
+import Scene from "./components/scene";
+import { Rocket, GraduationCap, Users, Sparkles, Cpu } from "lucide-react";
 
-const sections = [
+const scenes = [
   {
-    icon: <Sparkles size={28} />,
-    title: "The Beginning",
-    text: "ASVA was founded to create a platform where students could lead, innovate, and shape their academic experience.",
+    title: "The Beginning (2016)",
+    description:
+      "The ABUAD Salt Valley Association (ASVA) was established on March 10, 2016 as a student-led, innovation-driven association focused on creativity, leadership, and technological advancement within Afe Babalola University.",
+    icon: <Rocket size={42} />,
   },
   {
-    icon: <Rocket size={28} />,
-    title: "Rapid Growth",
-    text: "We launched academic initiatives, events, and leadership programs that transformed student engagement.",
+    title: "Innovation & Conferences",
+    description:
+      "ASVA organized flagship events such as EPIC 2022 and EPIC 2024 — large-scale innovation conferences and inter-university competitions involving institutions like Covenant University, Bells University, and Pan-Atlantic University. These events featured hackathons, leadership sessions, and cash prize competitions.",
+    icon: <Users size={42} />,
   },
   {
-    icon: <Globe size={28} />,
-    title: "Expansion",
-    text: "Partnerships, conferences, and collaborations expanded our reach across disciplines.",
+    title: "Technology & Development",
+    description:
+      "Through initiatives like DEVCON 1.0 and machine learning programs, ASVA exposed students to real-world tech practices, including AI, software development, and innovation-driven problem solving.",
+    icon: <Cpu size={42} />,
   },
   {
-    icon: <Target size={28} />,
+    title: "Skill Empowerment",
+    description:
+      "Programs such as the ASVA Film Making Initiative and Portfolio Design & Animation Training equipped students with skills in storytelling, media production, digital branding, and creative design.",
+    icon: <GraduationCap size={42} />,
+  },
+  {
+    title: "AI & Global Readiness",
+    description:
+      "Through NVIDIA Machine Learning Training, students gained hands-on experience in data processing, neural networks, and AI model development — preparing them for global opportunities in technology and research.",
+    icon: <Sparkles size={42} />,
+  },
+  {
+    title: "Community & Impact",
+    description:
+      "ASVA Day celebrations and interdisciplinary collaborations strengthened student engagement, leadership, and innovation culture, while enhancing ABUAD’s reputation as a forward-thinking institution.",
+    icon: <Users size={42} />,
+  },
+  {
     title: "The Future",
-    text: "We continue building a forward-thinking community focused on innovation and global impact.",
+    description:
+      "As ASVA enters its second decade, it is focused on scaling impact through structured conferences, hackathons, leadership programs, and innovation-driven initiatives that prepare students for global competitiveness.",
+    icon: <Rocket size={42} />,
   },
 ];
 
 export default function JourneyPage() {
-  const ref = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
-
   return (
-    <>
-      <MainNavbar />
+    <main className="bg-black text-white overflow-x-hidden">
 
-      <main ref={ref} className="bg-black text-white pt-24">
+      {/* HERO */}
+      <section className="h-screen flex flex-col items-center justify-center text-center px-6">
+        <h1 className="text-6xl md:text-8xl font-extrabold bg-gradient-to-r from-green-400 to-white bg-clip-text text-transparent">
+          Our Journey
+        </h1>
 
-        {/* HERO */}
-        <section className="h-[70vh] flex items-center justify-center text-center px-6">
-          <motion.div style={{ scale }}>
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-4">
-              Our Journey
-            </h1>
-            <p className="text-gray-400 max-w-xl mx-auto">
-              Every step tells a story of growth, impact, and transformation.
-            </p>
-          </motion.div>
-        </section>
+        <p className="text-gray-400 mt-6 max-w-xl">
+          A decade of innovation, leadership, and impact within ABUAD.
+        </p>
+      </section>
 
-        {/* STORY SECTIONS */}
-        {sections.map((section, i) => (
-          <motion.section
-            key={i}
-            className="min-h-screen flex flex-col md:flex-row items-center justify-center gap-10 px-6 max-w-6xl mx-auto"
-            initial={{ opacity: 0, y: 80 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            {/* TEXT */}
-            <div className="flex-1">
-              <div className="text-green-400 mb-4">{section.icon}</div>
+      {/* SCENES */}
+      {scenes.map((scene, i) => (
+        <Scene key={i} {...scene} />
+      ))}
 
-              <h2 className="text-3xl font-bold mb-4">
-                {section.title}
-              </h2>
+      {/* OUTRO */}
+      <section className="h-screen flex items-center justify-center text-center">
+        <h2 className="text-3xl text-gray-400">
+          And this is only the beginning.
+        </h2>
+      </section>
 
-              <p className="text-gray-400 leading-relaxed">
-                {section.text}
-              </p>
-            </div>
-
-            {/* VISUAL BLOCK */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="flex-1 h-[300px] rounded-2xl bg-gradient-to-br from-green-500/20 to-transparent border border-white/10 flex items-center justify-center"
-            >
-              <span className="text-gray-500">
-                Image / Illustration
-              </span>
-            </motion.div>
-          </motion.section>
-        ))}
-
-        {/* FINAL IMPACT */}
-        <section className="text-center py-24 px-6">
-          <h2 className="text-4xl font-bold mb-6">
-            And We're Just Getting Started
-          </h2>
-
-          <p className="text-gray-400 max-w-xl mx-auto">
-            The journey continues with innovation, leadership, and limitless possibilities.
-          </p>
-        </section>
-
-      </main>
-    </>
+    </main>
   );
 }
